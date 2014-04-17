@@ -1,3 +1,5 @@
+require "./book"
+
 class Library
   
   def initialize(yaml_file)
@@ -17,8 +19,10 @@ class Library
     puts "7. To exit\n\n"
     puts "Choose your option"
     
+    books = Book.view_all_books
+
     # Choose option to manage library 
-    option = gets.chomp
+    #option = gets.chomp
     case option
     when "1"
       # TODO display all books from library
