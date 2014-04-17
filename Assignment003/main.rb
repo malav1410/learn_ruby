@@ -1,5 +1,5 @@
+require 'yaml'
 load 'library.rb'
 
-yaml_file = "library.yml"
-library = Library.new(yaml_file)
+library = Library.new("library.yml")
 library.start()

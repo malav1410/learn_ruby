@@ -1,4 +1,9 @@
 class Library
+  
+  def initialize(yaml_file)
+    @load_library = YAML.load_file(yaml_file)
+  end
+  
   def start
     puts "----------"
     puts "Welcome to Library management tool. Choose an option."
@@ -8,10 +13,12 @@ class Library
     puts "3. Issue book to a member."
     puts "4. Check book availability."
     puts "5. Accept book returned by a member."
-    puts "6. Add book.\n\n"
+    puts "6. Add book."
+    puts "7. To exit\n\n"
     puts "Choose your option"
+    
+    # Choose option to manage library 
     option = gets.chomp
-
     case option
     when "1"
       # TODO display all books from library
@@ -27,8 +34,11 @@ class Library
     when "6"
       # TODO ask for book name and book author for to add new book. In this default value for taken should be false
       # And taken_by value should be nil
+    when "7"
+      # exit
     else
       puts "Please enter valid number"
     end 
+  
   end
 end
