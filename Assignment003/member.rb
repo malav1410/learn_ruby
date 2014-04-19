@@ -1,2 +1,3 @@
-class Member < Library
+class Member
+  attr_accessor :name, :id
 end

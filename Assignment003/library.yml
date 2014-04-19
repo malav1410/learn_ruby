@@ -1,61 +1,58 @@
 books:
-  1:
-    id: 1
+  - id: 1
     name: book1
     author: dont know
     taken: false
     taken_by: 
-  2:
-    id: 2
+  - id: 2
     name: book2
     author: dont know
     taken: false
     taken_by: 
-  3:
-    id: 3
+  - id: 3
     name: book3
     author: dont know
     taken: false
     taken_by: 
-  4:
-    id: 4
+  - id: 4
     name: book4
     author: dont know
     taken: false
     taken_by: 
-  5:
-    id: 5
+  - id: 5
     name: book5
     author: dont know
     taken: false
     taken_by: 
-  6:
-    id: 6
+  - id: 6
     name: book6
     author: dont know
     taken: false
     taken_by: 
-  7:
-    id: 7
+  - id: 7
     name: book7
     author: dont know
     taken: false
     taken_by: 
-  8:
-    id: 8
+  - id: 8
     name: book8
     author: dont know
     taken: false
     taken_by: 
-  9:
-    id: 9
+  - id: 9
     name: book9
     author: dont know
     taken: false
     taken_by: 
-  10:
-    id: 10
+  - id: 10
     name: book10
     author: dont know
     taken: false
     taken_by: 
+members:
+  - id: 1
+    name: name1
+  - id: 2
+    name: name2
+  - id: 3
+    name: name3 

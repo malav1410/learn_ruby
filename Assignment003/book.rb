@@ -1,8 +1,11 @@
-class Book < Library
-  attr_accessor :name, :author, :book_id, :taken, :taken_by 
+class Book
+  attr_accessor :name, :author, :id, :taken, :taken_by
 
-  def self.view_all_books
-    books = @load_library["books"]
-    puts books
+  def is_available_to_issue?
+    if taken == false
+      return true
+    else
+      return false
+    end
   end
 end
