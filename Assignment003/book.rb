@@ -2,11 +2,7 @@ class Book
   attr_accessor :name, :author, :id, :taken, :taken_by
 
   def is_available_to_issue?
-    if @taken == false
-      return true
-    else
-      return false
-    end
+    @taken == false ? true : false
   end
 
   def issue_book_to_member(member_id)

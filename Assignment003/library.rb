@@ -57,6 +57,7 @@ class Library
     end while option != "7"
   end
 
+  private
   # CASE 1
   # Show list of books
   def show_books
@@ -144,7 +145,7 @@ class Library
       if book.is_available_to_issue? == false
         book.return_by_member
       else
-        puts "\nThe book '#{book.name}' is not issued to member please check your book id\n\n" 
+        puts "\nThe book '#{book.name}' is not issued to any member please check your book id\n\n" 
       end
     else
       puts "-----invalid book id\n\n-----"
@@ -170,8 +171,6 @@ class Library
 
     puts "\nA new book with name = '#{book.name}' and Id = '#{book.id}' is created!!\n\n"
   end
-
-  private
 
   def load_library_data(yaml_file_name)
 
