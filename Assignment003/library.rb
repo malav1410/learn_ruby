@@ -11,9 +11,8 @@ class Library
   
   def start
     begin
-      puts "----------"
-      puts "Welcome to Library management tool. Choose an option."
-      puts "----------"
+      puts "\n----------"
+      puts "Welcome to Library management tool. Choose an option.\n"
       puts "1. View all books."
       puts "2. View all members."
       puts "3. Issue book to a member."
@@ -21,6 +20,7 @@ class Library
       puts "5. Accept book returned by a member."
       puts "6. Add book."
       puts "7. To exit\n\n"
+      puts "----------\n"
       puts "Choose your option"
 
       # Choose option to manage library 
@@ -104,9 +104,7 @@ class Library
       book = find_book_by_id(book_id)
       if book != nil
         if book.is_available_to_issue? == true
-          book.taken = true
-          book.taken_by = member_id
-          puts "\nBook with name '#{book.name}' is assigned to member with id #{member_id}\n\n"
+          book.issue_book_to_member(member_id)
         else
           puts "\n-----Sorry, book is already issued to member!-----\n\n"
         end
@@ -144,9 +142,7 @@ class Library
     book = find_book_by_id(book_id)
     if book != nil
       if book.is_available_to_issue? == false
-        book.taken = false
-        book.taken_by = nil
-        puts "\nThe book '#{book.name}' is returned by member and available to issue\n\n"
+        book.return_by_member
       else
         puts "\nThe book '#{book.name}' is not issued to member please check your book id\n\n" 
       end
