@@ -8,100 +8,85 @@ class Board
     @player2_arr = []
     @player1
     @player2
+    @winner
   end
 
   def start
-    instructions
-    puts "Enter player1 name: "
-    player1_name = gets.chomp
-    @player1 = create_player(player1_name, "X")
-    puts "Enter player2 name: "
-    player2_name = gets.chomp
-    @player2 = create_player(player2_name, "O")
-    puts "#{@player1.name} will play with '#{@player1.symbol}' and #{@player2.name} will play with '#{@player2.symbol}' \n\n"
-    start_game_logic
-
+    display_instructions
+    create_players
+    play_game
   end
 
 private
   # Two new players are created every time when new game starts
-  def create_player(name, symbol)
-    player_name = name
-    player_symbol = symbol
-    player = Player.new(player_name,player_symbol)
-    return player
+  def create_players
+    puts "Enter player1 name: "
+    player1_name = gets.chomp
+    @player1 = Player.new(player1_name, "X")
+    puts "Enter player2 name: "
+    player2_name = gets.chomp
+    @player2 = Player.new(player2_name, "O")
+    puts "#{@player1.name} will play with '#{@player1.symbol}' and #{@player2.name} will play with '#{@player2.symbol}' \n\n"
   end
-  
-  def start_game_logic
+
+  def play_game
+    chance_count = 1
+    @winner = nil
     display_game_board
-    n = 0
-    while n < 5 do
-      position_entered_by_player1
+    while chance_count < 10 do
+
+      if chance_count.odd?
+        position = take_chance(@player1)
+        @player1_arr.push position
+      else
+        position = take_chance(@player2)
+        @player2_arr.push position
+      end
       display_game_board
-      if n > 1
-        if check_result(@player1_arr.sort!) == true
-          puts "#{@player1.name.capitalize} wins"
-          return
+      if chance_count > 4
+        if chance_count.odd?
+          @winner = check_winner(@player1, @player1_arr.sort!)
+          break if @winner != nil
+        else
+          @winner = check_winner(@player2, @player2_arr.sort!)
+          break if @winner != nil
         end
       end
-      position_entered_by_player2
-      display_game_board
-      if n > 1
-        if check_result(@player2_arr.sort!) == true
-          puts "#{@player2.name.capitalize} wins"
-          return
-        end
-      end
-      n += 1
+      chance_count += 1
+    end
+
+    if @winner != nil
+      puts "#{@winner.name.capitalize} won!"
+    else
+      puts "Nobody won."
+    end
+  end
+
+  def take_chance(player)
+    puts "#{player.name.capitalize}'s turn(#{player.symbol}):"
+    position = gets.chomp
+    player_position = position.to_i
+    if is_position_valid?(position) == true 
+      @board_value_hash[player_position] = player.symbol
+      return player_position
+    else
+      puts "Enter valid position from '1-9'\n"
+      take_chance(player)
     end
   end
 
   # Display who wins
-  def check_result(position_arr)
+  def check_winner(player,position_arr)
     @result_arr.each do |lucky_arr|
       # Compares two array with '&' operator
       # example: [1,3,6,8,9] & [3,8,9] => [3,8,9], use of & operator  
       if position_arr & lucky_arr == lucky_arr
-        return true
+        return player
       end
     end
-    # Player1 have maximum 5 moves and player2 have maximum 4 moves
-    # If result not come at the end of total 9 moves than match is draw. 
-    if @player1_arr.count == 5 && @player2_arr.count == 4
-      puts "Match is draw!!"
-      return
-    end
+    return nil
   end
   
-  # Player 1
-  # Logic to store position entered by player
-  def position_entered_by_player1
-    puts "#{@player1.name.capitalize}'s turn(X):"
-    position = gets.chomp
-    player1_position = position.to_i
-    if is_position_valid?(position) == true 
-      @board_value_hash[player1_position] = "X"
-      @player1_arr.push player1_position
-    else
-      puts "Enter valid position from '1-9'\n"
-      position_entered_by_player1
-    end
-  end
-
-  # Player 2
-  # Logic to store position entered by player
-  def position_entered_by_player2
-    puts "#{@player2.name.capitalize}'s turn(O):"
-    position = gets.chomp
-    player2_position = position.to_i
-    if is_position_valid?(position) == true 
-      @board_value_hash[player2_position] = "O"
-      @player2_arr.push player2_position
-    else
-      puts "Enter valid position from '1-9'\n"
-      position_entered_by_player2
-    end
-  end
 
   # When player enter any value, this will check if its valid value for game or not.
   def is_position_valid?(position)
@@ -129,7 +114,7 @@ private
   end
   
   # Instruction related to game
-  def instructions
+  def display_instructions
     puts "-------------------------------"
     puts "Welcome to the TIC-TAC-TOE game"
     puts "-------------------------------\n"
